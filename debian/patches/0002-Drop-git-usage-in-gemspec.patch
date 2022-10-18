@@ -1,0 +1,23 @@
+From: Lucas Kanashiro <lucas.kanashiro@canonical.com>
+Date: Wed, 11 Mar 2020 12:21:01 -0300
+Subject: Drop git usage in gemspec
+
+---
+ minitest-reporters.gemspec | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/minitest-reporters.gemspec b/minitest-reporters.gemspec
+index 09de582..8c8ed60 100644
+--- a/minitest-reporters.gemspec
++++ b/minitest-reporters.gemspec
+@@ -23,8 +23,7 @@ Gem::Specification.new do |s|
+   s.add_development_dependency 'maruku'
+   s.add_development_dependency 'rake'
+ 
+-  s.files         = `git ls-files`.split("\n")
+-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
++  s.files         = Dir.glob("**/*").select {|v| v !~ /^debian/}
++  s.test_files    = Dir.glob("**/*").select {|v| v =~ /^test/}
+   s.require_paths = ['lib']
+ end
